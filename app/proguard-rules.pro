@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.google.common.**
+-dontwarn  org.apache.commons.logging.impl.**
+-dontwarn android.net.http.**
+-dontwarn com.android.internal.http.multipart.**
+-dontwarn com.google.api.client.extensions.appengine.**
+-dontwarn org.joda.time.**
+-dontwarn com.google.errorprone.annotations.**
+
+-keep class com.google.**{*;}

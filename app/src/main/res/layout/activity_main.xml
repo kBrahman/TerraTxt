@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <Spinner
         android:id="@+id/src_spinner"
@@ -23,14 +23,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"/>
 
-    <TextView
-        android:id="@+id/tv_src"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/l_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/src_spinner"/>
+        app:layout_constraintTop_toBottomOf="@id/target_spinner">
+
+        <TextView
+            android:id="@+id/tv_src"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="4dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_target"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="4dp"/>
+    </LinearLayout>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -41,25 +54,14 @@
         android:visibility="visible"
         app:layout_constraintGuide_percent="0.5"/>
 
-    <TextView
-        android:id="@+id/tv_target"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/target_spinner"/>
-
     <ImageView
         android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="4"
-        android:scaleY="4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_src"/>
+        app:layout_constraintTop_toBottomOf="@+id/l_layout"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -69,4 +71,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_id"
+        ads:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>
