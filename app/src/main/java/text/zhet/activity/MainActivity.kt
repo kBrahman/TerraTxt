@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val build = AdRequest.Builder().build()
         adView.loadAd(build)
         interstitialAd = InterstitialAd(this)
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 //            interstitialAd.show()
 //        }
         if (resultCode == Activity.RESULT_OK) {
-            val bitmap = data.extras.get("data") as Bitmap
+            val bitmap = data?.extras?.get("data") as Bitmap
             progress_bar.visibility = VISIBLE
             rec(bitmap)
         } else {
