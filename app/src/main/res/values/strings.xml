@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Textpert</string>
     <string name="menu">Menu</string>
     <string name="could_not_process_pic">Could not process the picture, try again please</string>
 </resources>
