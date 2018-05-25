@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="take_photo">Фотоға түсіру</string>
+    <string name="could_not_process_pic">Суретті өңдей алмадым, тағы бір рет түсіріп көріңізші</string>
+</resources>

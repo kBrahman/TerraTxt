@@ -20,7 +20,6 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -139,20 +138,26 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val image = FirebaseVisionImage.fromBitmap(bitmap)
         FirebaseVision.getInstance().getVisionCloudTextDetector(options)
                 .detectInImage(image).addOnSuccessListener {
-                    if (it == null) {
-                        Toast.makeText(this, R.string.could_not_process_pic, LENGTH_LONG).show()
-                    } else {
-                        process(it, bitmap)
-                    }
+                    process(it, bitmap)
                 }
                 .addOnFailureListener {
                     it.printStackTrace()
                 }
     }
 
-    private fun process(cloudText: FirebaseVisionCloudText, bitmap: Bitmap) {
-        srcText = cloudText.text
-        Thread { translate(srcText, bitmap) }.start()
+    private fun process(cloudText: FirebaseVisionCloudText?, bitmap: Bitmap) {
+        if (cloudText == null) {
+            Toast.makeText(this, R.string.could_not_process_pic, Toast.LENGTH_LONG).show()
+            changeViewStates(bitmap)
+        } else {
+            srcText = cloudText.text
+            Thread { translate(srcText, bitmap) }.start()
+        }
+    }
+
+    private fun changeViewStates(bitmap: Bitmap) {
+        img.setImageBitmap(bitmap)
+        progress_bar.visibility = GONE
     }
 
     private fun translate(string: String, bitmap: Bitmap) {
@@ -182,11 +187,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val translation = translateService.translate(string,
                 Translate.TranslateOption.targetLanguage(targetLanguageCode))
         runOnUiThread({
-            changeUIElements(adapter, string, translation, bitmap, srcSpinnerSelection, targetSpinnerSelection)
+            changeViewStates(adapter, string, translation, bitmap, srcSpinnerSelection, targetSpinnerSelection)
         })
     }
 
-    private fun changeUIElements(adapter: ArrayAdapter<Language>, string: String, translation: Translation, bitmap: Bitmap, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
+    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String, translation: Translation, bitmap: Bitmap, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
         src_spinner.adapter = adapter
         target_spinner.adapter = adapter
         src_spinner.setSelection(srcSpinnerSelection)

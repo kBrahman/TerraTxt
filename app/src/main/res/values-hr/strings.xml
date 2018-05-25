@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">" Nije moguće obraditi sliku, pokušajte ponovo"</string>
+    <string name="take_photo">Uslikaj</string>
+</resources>

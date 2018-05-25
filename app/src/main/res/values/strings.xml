@@ -1,4 +1,4 @@
 <resources>
-    <string name="menu">Menu</string>
+    <string name="take_photo">Take a picture</string>
     <string name="could_not_process_pic">Could not process the picture, try again please</string>
 </resources>
