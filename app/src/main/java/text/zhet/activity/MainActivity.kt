@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private lateinit var translateService: Translate
-    private lateinit var srcText: String
+    private var srcText: String? = null
     private var callCounter = 0
     private var targetLanguageCode: String = Locale.getDefault().language
     private lateinit var srcLanguageCode: String
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             R.id.action_shoot -> startCam()
             R.id.action_translate -> {
                 val string = edt_src.text.toString()
-                if (string != srcText) {
+                if (srcText == null || string != srcText) {
                     srcText = string
                     progress_bar.visibility = VISIBLE
                     Thread { translate(string, null) }.start()
@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         progress_bar.visibility = GONE
     }
 
-    private fun translate(string: String, bitmap: Bitmap?) {
+    private fun translate(string: String?, bitmap: Bitmap?) {
         val instance = TranslateOptions.newBuilder().setApiKey(BuildConfig.KEY).build()
 
         translateService = instance.service
@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         })
     }
 
-    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String, translation: Translation, bitmap: Bitmap?, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
+    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String?, translation: Translation, bitmap: Bitmap?, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
         src_spinner.adapter = adapter
         target_spinner.adapter = adapter
         src_spinner.setSelection(srcSpinnerSelection)
