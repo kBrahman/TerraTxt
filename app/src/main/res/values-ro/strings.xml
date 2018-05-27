@@ -2,4 +2,5 @@
 <resources>
     <string name="take_photo">"Fa o fotografie "</string>
     <string name="could_not_process_pic">" Nu am putut procesa imaginea, încercați din nou, vă rog"</string>
+    <string name="translate">Traduceți</string>
 </resources>

@@ -92,8 +92,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        startCam()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_shoot -> startCam()
+            R.id.action_translate -> {
+                val string = edt_src.text.toString()
+                if (string != srcText) {
+                    srcText = string
+                    progress_bar.visibility = VISIBLE
+                    Thread { translate(string, null) }.start()
+                }
+            }
+
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -160,7 +171,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         progress_bar.visibility = GONE
     }
 
-    private fun translate(string: String, bitmap: Bitmap) {
+    private fun translate(string: String, bitmap: Bitmap?) {
         val instance = TranslateOptions.newBuilder().setApiKey("AIzaSyDYpWXlXuXsSxqH1Cp2-JxrjBKrhYMfLlw").build()
 
         translateService = instance.service
@@ -191,15 +202,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         })
     }
 
-    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String, translation: Translation, bitmap: Bitmap, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
+    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String, translation: Translation, bitmap: Bitmap?, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
         src_spinner.adapter = adapter
         target_spinner.adapter = adapter
         src_spinner.setSelection(srcSpinnerSelection)
         target_spinner.setSelection(targetSpinnerSelection)
         progress_bar.visibility = GONE
-        tv_src.text = string
+        edt_src.setText(string)
         tv_target.text = translation.translatedText
-        img.setImageBitmap(bitmap)
+        if (bitmap != null) img.setImageBitmap(bitmap)
         src_spinner.onItemSelectedListener = this
         target_spinner.onItemSelectedListener = this
     }

@@ -1,4 +1,5 @@
 <resources>
     <string name="take_photo">Take a picture</string>
     <string name="could_not_process_pic">Could not process the picture, try again please</string>
+    <string name="translate">Translate</string>
 </resources>

@@ -29,12 +29,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/target_spinner">
 
-        <TextView
-            android:id="@+id/tv_src"
+        <EditText
+            android:id="@+id/edt_src"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="4dp"/>
+            android:background="#00000000"
+            android:padding="4dp"
+            android:textSize="12sp"/>
 
 
         <TextView
@@ -42,7 +44,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="4dp"/>
+            android:padding="4dp"
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <android.support.constraint.Guideline

@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/shoot"
+        android:id="@+id/action_shoot"
         android:icon="@drawable/ic_photo_camera_black_24dp"
         android:title="@string/take_photo"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_translate"
+        android:icon="@drawable/ic_translate_black_24dp"
+        android:title="@string/translate"
+        app:showAsAction="ifRoom"/>
 </menu>

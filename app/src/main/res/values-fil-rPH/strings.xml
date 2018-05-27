@@ -2,4 +2,5 @@
 <resources>
     <string name="take_photo">"Kumuha ng litrato "</string>
     <string name="could_not_process_pic">Hindi maiproseso ang larawan, subukan muli mangyaring</string>
+    <string name="translate">Isalin</string>
 </resources>

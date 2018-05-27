@@ -2,4 +2,5 @@
 <resources>
     <string name="take_photo">Сфотографировать</string>
     <string name="could_not_process_pic">Не удалось распознать, попробуйте пожалуйста еще раз</string>
+    <string name="translate">Перевести</string>
 </resources>
