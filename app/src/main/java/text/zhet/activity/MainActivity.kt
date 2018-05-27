@@ -31,6 +31,7 @@ import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
 import com.google.firebase.ml.vision.cloud.text.FirebaseVisionCloudText
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import kotlinx.android.synthetic.main.activity_main.*
+import text.zhet.BuildConfig
 import text.zhet.R
 import text.zhet.model.Language
 import java.util.*
@@ -172,7 +173,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun translate(string: String, bitmap: Bitmap?) {
-        val instance = TranslateOptions.newBuilder().setApiKey("AIzaSyDYpWXlXuXsSxqH1Cp2-JxrjBKrhYMfLlw").build()
+        val instance = TranslateOptions.newBuilder().setApiKey(BuildConfig.KEY).build()
 
         translateService = instance.service
         val supportedLanguages = translateService

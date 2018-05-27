@@ -2,9 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def keystorePropertiesFile = rootProject.file("keystore.properties");
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+keystoreProperties.load(rootProject.file("keystore.properties").newDataInputStream())
+
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     signingConfigs {
@@ -23,6 +25,7 @@ android {
         versionCode 5
         versionName "1.4"
         multiDexEnabled true
+        buildConfigField "String", "KEY", localProperties["key"]
     }
     buildTypes {
         release {
