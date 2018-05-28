@@ -3,4 +3,5 @@
     <string name="take_photo">Фотоға түсіру</string>
     <string name="could_not_process_pic">Суретті өңдей алмадым, тағы бір рет түсіріп көріңізші</string>
     <string name="translate">Аудар</string>
+    <string name="app_needs_inet_conn">Мына қосымшаға интернет қажет</string>
 </resources>

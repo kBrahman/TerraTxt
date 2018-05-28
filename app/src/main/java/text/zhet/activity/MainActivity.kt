@@ -2,9 +2,11 @@ package text.zhet.activity
 
 import android.Manifest.permission.CAMERA
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
@@ -20,6 +22,7 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -56,6 +59,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!isNetworkConnected()) {
+            Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
+            finish()
+            return
+        }
         setContentView(R.layout.activity_main)
         MobileAds.initialize(this, getString(R.string.app_id))
 
@@ -69,6 +77,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             startCam()
         }
+    }
+
+    private fun isNetworkConnected(): Boolean {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo != null;
     }
 
     private fun checkPermissions(permissions: Array<String>): Boolean {

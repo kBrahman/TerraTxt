@@ -3,4 +3,5 @@
     <string name="could_not_process_pic">" Nije moguće obraditi sliku, pokušajte ponovo"</string>
     <string name="take_photo">Uslikaj</string>
     <string name="translate">Prevedi</string>
+    <string name="app_needs_inet_conn">Ova aplikacija treba internetsku vezu</string>
 </resources>

@@ -3,4 +3,5 @@
     <string name="take_photo">"Kumuha ng litrato "</string>
     <string name="could_not_process_pic">Hindi maiproseso ang larawan, subukan muli mangyaring</string>
     <string name="translate">Isalin</string>
+    <string name="app_needs_inet_conn">"Kinakailangan ng app na ito ang koneksyon sa internet "</string>
 </resources>

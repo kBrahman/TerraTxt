@@ -3,4 +3,5 @@
     <string name="take_photo">Зробіть фото</string>
     <string name="could_not_process_pic">Не вдалося обробити зображення, спробуйте ще раз будь ласка</string>
     <string name="translate">Перекласти</string>
+    <string name="app_needs_inet_conn">"Для цього додатка потрібне підключення до Інтернету "</string>
 </resources>
