@@ -2,6 +2,7 @@ package text.zhet.activity
 
 import android.Manifest.permission.CAMERA
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,6 +10,7 @@ import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.MediaStore
+import android.speech.RecognizerIntent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -22,7 +24,6 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -47,7 +48,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     companion object {
         const val PERMISSION_REQUEST = 1
-        const val ACTIVITY_REQUEST_CODE = 2
+        const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
+        const val ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH = 3
     }
 
     private lateinit var translateService: Translate
@@ -59,11 +61,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!isNetworkConnected()) {
-            Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
-            finish()
-            return
-        }
         setContentView(R.layout.activity_main)
         MobileAds.initialize(this, getString(R.string.app_id))
 
@@ -117,15 +114,29 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     Thread { translate(string, null) }.start()
                 }
             }
+            R.id.action_mic -> speechToText()
 
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun speechToText() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.translate_what));
+        try {
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH)
+        } catch (a: ActivityNotFoundException) {
+            a.printStackTrace()
+        }
+    }
+
     private fun startCam() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
-            startActivityForResult(intent, ACTIVITY_REQUEST_CODE)
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE)
+
         }
     }
 
@@ -139,9 +150,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 //            interstitialAd.show()
 //        }
         if (resultCode == Activity.RESULT_OK) {
-            val bitmap = data?.extras?.get("data") as Bitmap
-            progress_bar.visibility = VISIBLE
-            rec(bitmap)
+            when (requestCode) {
+                ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE -> {
+                    val bitmap = data?.extras?.get("data") as Bitmap
+                    progress_bar.visibility = VISIBLE
+                    rec(bitmap)
+                }
+                ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH -> {
+                    srcText = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
+                    edt_src.setText(srcText)
+                    progress_bar.visibility = VISIBLE
+                    Thread { translate(srcText, null) }.start()
+                }
+            }
         } else {
             progress_bar.visibility = GONE
         }

@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_mic"
+        android:icon="@drawable/ic_mic_black_24dp"
+        android:title="@string/say"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_shoot"
         android:icon="@drawable/ic_photo_camera_black_24dp"
         android:title="@string/take_photo"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_translate"
         android:icon="@drawable/ic_translate_black_24dp"
         android:title="@string/translate"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 </menu>

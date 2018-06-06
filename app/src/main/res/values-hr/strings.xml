@@ -4,4 +4,6 @@
     <string name="take_photo">Uslikaj</string>
     <string name="translate">Prevedi</string>
     <string name="app_needs_inet_conn">Ova aplikacija treba internetsku vezu</string>
+    <string name="say">reći</string>
+    <string name="translate_what">Recite ono što želite prevesti</string>
 </resources>
