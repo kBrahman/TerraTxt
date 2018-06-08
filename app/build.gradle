@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 def keystoreProperties = new Properties()
 keystoreProperties.load(rootProject.file("keystore.properties").newDataInputStream())
 
-Properties localProperties = new Properties()
+def localProperties = new Properties()
 localProperties.load(rootProject.file('local.properties').newDataInputStream())
 
 android {
@@ -22,8 +22,8 @@ android {
         applicationId "text.zhet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 9
-        versionName "2.0"
+        versionCode 10
+        versionName "2.1"
         multiDexEnabled true
         buildConfigField "String", "KEY", localProperties["key"]
     }

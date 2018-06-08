@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">无法处理图片，请再试一次</string>
+    <string name="translate">翻译</string>
+    <string name="app_needs_inet_conn">"这个程序需要互联网连接 "</string>
+    <string name="say">"说 "</string>
+    <string name="translate_what">"说出你想要翻译的内容 "</string>
+    <string name="take_photo">"拍一张照片 "</string>
+</resources>
