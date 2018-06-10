@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="take_photo">Nofotogrāfē</string>
+    <string name="could_not_process_pic">Nevarēja apstrādāt attēlu, lūdzu, mēģiniet vēlreiz</string>
+    <string name="translate">Tulkot</string>
+    <string name="app_needs_inet_conn">Šim lietotnei ir nepieciešams interneta pieslēgums</string>
+    <string name="say">Teikt</string>
+    <string name="translate_what">Saka, ko jūs vēlaties tulkot</string>
+</resources>
