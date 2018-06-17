@@ -22,8 +22,8 @@ android {
         applicationId "text.zhet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 13
-        versionName "2.4"
+        versionCode 14
+        versionName "2.5"
         multiDexEnabled true
         buildConfigField "String", "KEY", localProperties["key"]
     }
@@ -51,7 +51,7 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-ml-vision:16.0.0'
     implementation 'com.google.cloud:google-cloud-translate:1.28.0'
