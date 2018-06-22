@@ -14,18 +14,16 @@ import android.speech.RecognizerIntent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.util.SparseIntArray
-import android.view.Menu
-import android.view.MenuItem
-import android.view.Surface
-import android.view.View
+import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
@@ -42,7 +40,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
     private val ORIENTATIONS = SparseIntArray()
 
@@ -50,14 +48,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         const val PERMISSION_REQUEST = 1
         const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
         const val ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH = 3
+        private val TAG = MainActivity::class.java.simpleName
     }
 
     private lateinit var translateService: Translate
     private var srcText: String? = null
-    private var callCounter = 0
     private var targetLanguageCode: String = Locale.getDefault().language
     private lateinit var srcLanguageCode: String
-    private lateinit var interstitialAd: InterstitialAd
+    private var shouldCall = false
+    private lateinit var supportedLanguages: MutableList<com.google.cloud.translate.Language>
+    private var targetSpinnerSelection: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private fun isNetworkConnected(): Boolean {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo != null;
+        return cm.activeNetworkInfo != null
     }
 
     private fun checkPermissions(permissions: Array<String>): Boolean {
@@ -121,10 +121,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun speechToText() {
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.translate_what));
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.translate_what))
         try {
             startActivityForResult(intent, ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH)
         } catch (a: ActivityNotFoundException) {
@@ -143,12 +143,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val build = AdRequest.Builder().build()
         adView.loadAd(build)
-        interstitialAd = InterstitialAd(this)
-        interstitialAd.adUnitId = getString(R.string.int_id)
-        interstitialAd.loadAd(build)
-//        if (interstitialAd.isLoaded) {
-//            interstitialAd.show()
-//        }
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE -> {
@@ -166,7 +160,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         } else {
             progress_bar.visibility = GONE
         }
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -176,6 +169,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun rec(bitmap: Bitmap) {
+        if (!isNetworkConnected()) {
+            Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
+            return
+        }
         val options = FirebaseVisionCloudDetectorOptions.Builder()
                 .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
                 .setMaxResults(15)
@@ -207,81 +204,118 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun translate(string: String?, bitmap: Bitmap?) {
+        if (!isNetworkConnected()) {
+            Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
+            return
+        }
         val instance = TranslateOptions.newBuilder().setApiKey(BuildConfig.KEY).build()
 
         translateService = instance.service
-        val supportedLanguages = translateService
+        supportedLanguages = translateService
                 .listSupportedLanguages(Translate.LanguageListOption.targetLanguage(Locale.getDefault().language))
         val languageNames = ArrayList<Language>()
         val detection = translateService.detect(string)
         srcLanguageCode = detection.language
         var srcSpinnerSelection = 0
-        var targetSpinnerSelection = 0
+
 
         supportedLanguages.forEachIndexed { index, it ->
             if (it.code == detection.language) {
                 srcSpinnerSelection = index
             }
 
-            if (Locale.getDefault().language == Locale(it.code).language) {
+            if (targetSpinnerSelection == null && Locale.getDefault().language == Locale(it.code).language) {
                 targetSpinnerSelection = index
             }
             languageNames.add(Language(it.name.capitalize(), it.code))
         }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languageNames)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        val translation = translateService.translate(string,
-                Translate.TranslateOption.targetLanguage(targetLanguageCode))
-        runOnUiThread({
+        val translation = translateService
+                .translate(string,
+                        Translate.TranslateOption.targetLanguage(targetLanguageCode))
+
+        runOnUiThread {
             changeViewStates(adapter, string, translation, bitmap, srcSpinnerSelection, targetSpinnerSelection)
-        })
+        }
     }
 
-    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String?, translation: Translation, bitmap: Bitmap?, srcSpinnerSelection: Int, targetSpinnerSelection: Int) {
+    private fun changeViewStates(adapter: ArrayAdapter<Language>, string: String?, translation: Translation, bitmap: Bitmap?, srcSpinnerSelection: Int,
+                                 targetSpinnerSelection: Int?) {
         src_spinner.adapter = adapter
         target_spinner.adapter = adapter
         src_spinner.setSelection(srcSpinnerSelection)
-        target_spinner.setSelection(targetSpinnerSelection)
+        target_spinner.setSelection(targetSpinnerSelection!!)
         progress_bar.visibility = GONE
+        Log.i(TAG, "prpgBar should have disappeared")
         edt_src.setText(string)
         tv_target.text = translation.translatedText
         if (bitmap != null) img.setImageBitmap(bitmap)
         src_spinner.onItemSelectedListener = this
         target_spinner.onItemSelectedListener = this
+        src_spinner.setOnTouchListener(this)
+        target_spinner.setOnTouchListener(this)
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        shouldCall = true
+        v?.performClick()
+        return true
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        if (callCounter > 1) {
-            val viewId = parent.id
+        Log.i(TAG, "onItemSelected")
+        val viewId = parent.id
+        if (shouldCall) {
             progress_bar.visibility = VISIBLE
-            when (viewId) {
-                R.id.src_spinner -> {
-                    Thread {
+            srcText = edt_src.text.toString()
+            var translatedTxt: String? = null
+            Thread {
+                when (viewId) {
+                    R.id.src_spinner -> {
+                        val oldSrcLangCode = srcLanguageCode
                         srcLanguageCode = (parent.adapter.getItem(position) as Language).code
-                        val translation = translateService.translate(srcText, Translate.TranslateOption
-                                .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode))
-                        runOnUiThread({
-                            tv_target.text = translation.translatedText
-                            progress_bar.visibility = GONE
-                        })
-                    }.start()
-                }
-                R.id.target_spinner -> {
-                    Thread {
+                        if (srcLanguageCode == targetLanguageCode) {
+                            target_spinner.post {
+                                target_spinner.setSelection(getIndexByLanguage(oldSrcLangCode))
+                            }
+                            targetLanguageCode = oldSrcLangCode
+                            srcText = tv_target.text.toString()
+                            edt_src.setText(srcText)
+                        }
+                        translatedTxt = translateService.translate(srcText, Translate.TranslateOption
+                                .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode)).translatedText
+                    }
+                    R.id.target_spinner -> {
                         targetLanguageCode = (parent.adapter.getItem(position) as Language).code
-                        val translation = translateService.translate(srcText, Translate.TranslateOption
-                                .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode))
-                        runOnUiThread({
-                            tv_target.text = translation.translatedText
-                            progress_bar.visibility = GONE
-                        })
-                    }.start()
+                        if (targetLanguageCode == srcLanguageCode) {
+                            Log.i(TAG, "target spinner=> targetLangCode=$targetLanguageCode, srcLangCode=$srcLanguageCode, edt text=${edt_src.text}")
+                            translatedTxt = edt_src.text.toString()
+                        } else {
+                            translatedTxt = translateService.translate(srcText, Translate.TranslateOption
+                                    .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode)).translatedText
+                        }
+                        targetSpinnerSelection = position
+                    }
+
                 }
-            }
+                runOnUiThread {
+                    tv_target.text = translatedTxt
+                    progress_bar.visibility = GONE
+                }
+            }.start()
+
         }
-        callCounter++
     }
 
+    private fun getIndexByLanguage(oldSrcLangCode: String): Int {
+        supportedLanguages.forEachIndexed { index, language ->
+            if (oldSrcLangCode == language.code) {
+                return index
+            }
+        }
+        return 0
+    }
 }
