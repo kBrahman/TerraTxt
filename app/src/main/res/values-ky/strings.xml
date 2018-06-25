@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="take_photo">"Сүрөттү алып "</string>
+    <string name="could_not_process_pic">"Сүрөттү иштеп чыга алган жокпуз, дагы бир жолу аракет кылып көр "</string>
+    <string name="translate">которуу</string>
+    <string name="app_needs_inet_conn">"Бул колдонмо Интернет байланышы керек "</string>
+    <string name="say">айтуу</string>
+    <string name="translate_what">которуп келет эмне деп айт</string>
+</resources>
