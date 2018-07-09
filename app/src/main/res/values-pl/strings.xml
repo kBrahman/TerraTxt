@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="take_photo">"Zrobić zdjęcie "</string>
+    <string name="could_not_process_pic">"Nie można przetworzyć obrazu, spróbuj ponownie "</string>
+    <string name="translate">Tłumaczyć</string>
+    <string name="app_needs_inet_conn">"Ta aplikacja wymaga połączenia z Internetem "</string>
+    <string name="say">Mówić</string>
+    <string name="translate_what">"Powiedz, co chcesz przetłumaczyć "</string>
+</resources>
