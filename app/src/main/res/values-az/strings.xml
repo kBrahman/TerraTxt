@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="take_photo">"Şəkil çək "</string>
+    <string name="could_not_process_pic">"Şəkil işlənməyib, yenidən cəhd edin "</string>
+    <string name="translate">"Tərcümə etmək "</string>
+    <string name="app_needs_inet_conn">"Bu tətbiqə internet bağlantısı lazımdır "</string>
+    <string name="say">Söyləyin</string>
+    <string name="translate_what">"Tərcümə etmək istədiyinizi deyin "</string>
+</resources>
