@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
@@ -59,6 +60,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private lateinit var supportedLanguages: MutableList<com.google.cloud.translate.Language>
     private var targetSpinnerSelection: Int? = null
 
+    private var ad: InterstitialAd? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,6 +77,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         } else {
             startCam()
         }
+        ad = InterstitialAd(this)
+        ad?.adUnitId = getString(R.string.int_id)
+        ad?.loadAd(AdRequest.Builder().build())
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ad?.show()
     }
 
     private fun isNetworkConnected(): Boolean {
