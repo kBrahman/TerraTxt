@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo">"التقط صوره "</string>
     <string name="could_not_process_pic">"لا يمكن معالجة الصورة ، حاول مرة أخرى من فضلك "</string>
     <string name="translate">ترجمه</string>
     <string name="app_needs_inet_conn">"هذا التطبيق يحتاج إلى اتصال بالإنترنت "</string>

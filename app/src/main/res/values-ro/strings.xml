@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo">"Fa o fotografie "</string>
+
     <string name="could_not_process_pic">" Nu am putut procesa imaginea, încercați din nou, vă rog"</string>
     <string name="translate">Traduceți</string>
     <string name="app_needs_inet_conn">"Această aplicație are nevoie de conexiune la internet "</string>

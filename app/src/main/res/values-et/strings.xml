@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo">"Tee pilti "</string>
+
     <string name="could_not_process_pic">"Pilti ei saanud töödelda, palun proovige uuesti "</string>
     <string name="translate">"Tõlkima "</string>
     <string name="app_needs_inet_conn">"Sellel rakendusel on vaja Interneti-ühendust "</string>

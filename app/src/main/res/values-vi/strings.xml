@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo">"Chụp ảnh "</string>
+
     <string name="could_not_process_pic">"Không thể xử lý ảnh, hãy thử lại "</string>
     <string name="translate">Dịch</string>
     <string name="app_needs_inet_conn">"Ứng dụng này cần kết nối internet "</string>

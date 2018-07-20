@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo">"Toma una foto "</string>
+
     <string name="could_not_process_pic">"No se pudo procesar la imagen, inténtalo nuevamente por favor "</string>
     <string name="app_needs_inet_conn">Esta aplicación necesita conexión a internet</string>
     <string name="translate">Traducir</string>

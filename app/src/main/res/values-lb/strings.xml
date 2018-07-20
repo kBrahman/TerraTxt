@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Textpert</string>
-    <string name="take_photo">"Eng Foto maachen "</string>
+
     <string name="could_not_process_pic">"Konnt d'Bild net veränneren, probéiert nach eng Kéier "</string>
     <string name="translate">Iwwersetzung</string>
     <string name="app_needs_inet_conn">"Dës App brauch Internetverbindung "</string>

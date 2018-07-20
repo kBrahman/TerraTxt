@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo"> Chukua picha </string>
+
     <string name="could_not_process_pic"> Haikuweza kusindika picha, jaribu tena tafadhali </string>
     <string name="translate"> Tafsiri </string>
     <string name="app_needs_inet_conn"> Programu hii inahitaji uunganisho wa mtandao </string>

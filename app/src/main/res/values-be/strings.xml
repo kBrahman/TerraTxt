@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="take_photo">сфатаграфаваць</string>
+
     <string name="could_not_process_pic">"Не атрымалася апрацаваць малюнак, паспрабуйце яшчэ раз калі ласка "</string>
     <string name="translate">перавесці</string>
     <string name="app_needs_inet_conn">"Гэта дадатак патрабуе падлучэння да Інтэрнэту "</string>
