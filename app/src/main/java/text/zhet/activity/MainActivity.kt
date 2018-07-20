@@ -152,8 +152,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val build = AdRequest.Builder().build()
-        adView.loadAd(build)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE -> {
@@ -168,6 +166,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     Thread { translate(srcText, null) }.start()
                 }
             }
+            ad?.show()
         } else {
             progress_bar.visibility = GONE
         }
