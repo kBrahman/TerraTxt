@@ -2,7 +2,7 @@
 <resources>
 
     <string name="could_not_process_pic"> Resmi işleyemedim, tekrar deneyin lütfen </string>
-    <string name="translate"> Çevir </string>
+
     <string name="app_needs_inet_conn"> Bu uygulama internet bağlantısına ihtiyaç duyar </string>
     <string name="say">söylemek</string>
     <string name="translate_what">Çevirmek istediğini söyle</string>

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="could_not_process_pic">Rasmni qayta tuzib bo\'lmadi, iltimos, yana bir bor urinib ko\'ring</string>
-    <string name="translate">"Tarjima qiling "</string>
+
     <string name="app_needs_inet_conn">Ushbu ilova internetga ulanishga muhtoj</string>
     <string name="say">Demoq</string>
     <string name="translate_what">Tarjima qilishni xohlagan narsani ayting</string>

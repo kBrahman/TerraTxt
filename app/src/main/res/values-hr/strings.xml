@@ -2,7 +2,7 @@
 <resources>
     <string name="could_not_process_pic">" Nije moguće obraditi sliku, pokušajte ponovo"</string>
 
-    <string name="translate">Prevedi</string>
+
     <string name="app_needs_inet_conn">Ova aplikacija treba internetsku vezu</string>
     <string name="say">reći</string>
     <string name="translate_what">Recite ono što želite prevesti</string>

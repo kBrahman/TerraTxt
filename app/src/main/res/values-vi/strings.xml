@@ -2,7 +2,7 @@
 <resources>
 
     <string name="could_not_process_pic">"Không thể xử lý ảnh, hãy thử lại "</string>
-    <string name="translate">Dịch</string>
+
     <string name="app_needs_inet_conn">"Ứng dụng này cần kết nối internet "</string>
     <string name="say">Nói</string>
     <string name="translate_what">"Nói những gì bạn muốn dịch "</string>

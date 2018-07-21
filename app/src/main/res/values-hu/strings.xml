@@ -1,7 +1,7 @@
 <resources>
 
     <string name="could_not_process_pic">Nem sikerült feldolgozni a képet, próbálkozz újra</string>
-    <string name="translate">fordít</string>
+
     <string name="app_needs_inet_conn">Ez az alkalmazás internetkapcsolatra van szüksége</string>
     <string name="say">"mond "</string>
     <string name="translate_what">Mondja ki, mit szeretne lefordítani</string>

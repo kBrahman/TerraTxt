@@ -2,7 +2,7 @@
 <resources>
 
     <string name="could_not_process_pic">画像を処理できませんでした。もう一度やり直してください。</string>
-    <string name="translate">翻訳</string>
+
     <string name="app_needs_inet_conn">このアプリはインターネットに接続する必要があります</string>
     <string name="say">いう</string>
     <string name="translate_what">あなたが翻訳したいことを言ってください</string>

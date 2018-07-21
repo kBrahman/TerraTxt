@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"படத்தைச் செயலாக்க முடியவில்லை, மீண்டும் முயற்சிக்கவும் "</string>
+    <string name="app_needs_inet_conn">"இந்த பயன்பாட்டிற்கு இணைய இணைப்பு தேவை "</string>
+    <string name="say">சொல்</string>
+    <string name="translate_what">"நீங்கள் மொழிபெயர்க்க விரும்புவதைச் சொல்லுங்கள் "</string>
+</resources>

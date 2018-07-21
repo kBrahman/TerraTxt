@@ -2,7 +2,7 @@
 <resources>
 
     <string name="could_not_process_pic">"Не атрымалася апрацаваць малюнак, паспрабуйце яшчэ раз калі ласка "</string>
-    <string name="translate">перавесці</string>
+
     <string name="app_needs_inet_conn">"Гэта дадатак патрабуе падлучэння да Інтэрнэту "</string>
     <string name="say">сказаць</string>
     <string name="translate_what">"Скажыце, што вы хочаце перавесці "</string>
