@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">" Nu am putut procesa imaginea, încercați din nou, vă rog"</string>
 
     <string name="app_needs_inet_conn">"Această aplicație are nevoie de conexiune la internet "</string>
-    <string name="say">Spune</string>
+
     <string name="translate_what">Spuneți ce doriți să traduceți</string>
 </resources>

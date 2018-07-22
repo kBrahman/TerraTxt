@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">"사진을 처리 할 수 ​​없습니다. 다시 시도하십시오. "</string>
 
     <string name="app_needs_inet_conn">"이 앱은 인터넷에 연결되어 있어야합니다. "</string>
-    <string name="say">말하다</string>
+
     <string name="translate_what">"번역 할 말을 말해보세요. "</string>
 </resources>

@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">"तस्वीर को संसाधित नहीं कर सका, कृपया पुनः प्रयास करें "</string>
 
     <string name="app_needs_inet_conn">"इस ऐप को इंटरनेट कनेक्शन की जरूरत है "</string>
-    <string name="say">कहना</string>
+
     <string name="translate_what">"कहें कि आप क्या अनुवाद करना चाहते हैं "</string>
 </resources>

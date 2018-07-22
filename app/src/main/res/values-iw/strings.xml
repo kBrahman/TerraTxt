@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">"לא ניתן לעבד את התמונה, נסה שוב בבקשה "</string>
 
     <string name="app_needs_inet_conn">"יישום זה צריך חיבור לאינטרנט "</string>
-    <string name="say">אמר</string>
+
     <string name="translate_what">"אמור מה שאתה רוצה לתרגם "</string>
 </resources>

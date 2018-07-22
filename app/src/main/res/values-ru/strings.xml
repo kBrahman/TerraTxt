@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">Не удалось распознать, попробуйте пожалуйста еще раз</string>
 
     <string name="app_needs_inet_conn">Приложению необходим доступ в интернет</string>
-    <string name="say">Сказать</string>
+
     <string name="translate_what">Скажите что перевести</string>
 </resources>

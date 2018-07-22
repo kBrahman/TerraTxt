@@ -4,6 +4,6 @@
     <string name="could_not_process_pic"> Haikuweza kusindika picha, jaribu tena tafadhali </string>
 
     <string name="app_needs_inet_conn"> Programu hii inahitaji uunganisho wa mtandao </string>
-    <string name="say">sema</string>
+
     <string name="translate_what">Sema nini unataka kutafsiri</string>
 </resources>

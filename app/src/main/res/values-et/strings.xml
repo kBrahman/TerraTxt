@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">"Pilti ei saanud töödelda, palun proovige uuesti "</string>
 
     <string name="app_needs_inet_conn">"Sellel rakendusel on vaja Interneti-ühendust "</string>
-    <string name="say">Öelge</string>
+
     <string name="translate_what">"Ütle, mida soovite tõlkida "</string>
 </resources>

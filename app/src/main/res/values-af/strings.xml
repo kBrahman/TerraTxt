@@ -3,6 +3,6 @@
     <string name="could_not_process_pic">"Kon nie die prent verwerk nie, probeer asseblief weer "</string>
 
     <string name="app_needs_inet_conn">"Hierdie inligting het internetverbinding nodig "</string>
-    <string name="say">sê</string>
+
     <string name="translate_what">"Sê wat jy wil vertaal "</string>
 </resources>

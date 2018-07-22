@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">Суретті өңдей алмадым, тағы бір рет түсіріп көріңізші</string>
 
     <string name="app_needs_inet_conn">Мына қосымшаға интернет қажет</string>
-    <string name="say">Айту</string>
+
     <string name="translate_what">Аударатын сөзді айтыңыз</string>
 </resources>

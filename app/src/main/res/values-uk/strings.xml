@@ -4,6 +4,6 @@
     <string name="could_not_process_pic">Не вдалося обробити зображення, спробуйте ще раз будь ласка</string>
 
     <string name="app_needs_inet_conn">"Для цього додатка потрібне підключення до Інтернету "</string>
-    <string name="say">казати</string>
+
     <string name="translate_what">" Скажіть, що ви хочете перекласти"</string>
 </resources>
