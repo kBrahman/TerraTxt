@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"Kunne ikke behandle billedet, prøv igen venligst "</string>
+    <string name="app_needs_inet_conn">"Denne app har internetforbindelse "</string>
+    <string name="translate_what">"Sig hvad du vil oversætte "</string>
+</resources>
