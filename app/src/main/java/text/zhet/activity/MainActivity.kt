@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         ad = InterstitialAd(this)
         ad?.adUnitId = getString(R.string.int_id)
         ad?.loadAd(AdRequest.Builder().build())
+        adView.loadAd(AdRequest.Builder().build())
     }
 
     override fun onBackPressed() {
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                 val string = edt_src.text.toString()
                 if (srcText == null || string != srcText) {
                     srcText = string
-                    progress_bar.visibility = VISIBLE
+                    prgBar.visibility = VISIBLE
                     Thread { translate(string, null) }.start()
                 }
             }
@@ -153,22 +154,21 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK) {
+            prgBar.visibility = VISIBLE
             when (requestCode) {
                 ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE -> {
                     val bitmap = data?.extras?.get("data") as Bitmap
-                    progress_bar.visibility = VISIBLE
                     rec(bitmap)
                 }
                 ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH -> {
                     srcText = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
                     edt_src.setText(srcText)
-                    progress_bar.visibility = VISIBLE
                     Thread { translate(srcText, null) }.start()
                 }
             }
             ad?.show()
         } else {
-            progress_bar.visibility = GONE
+            prgBar.visibility = GONE
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -181,6 +181,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private fun rec(bitmap: Bitmap) {
         if (!isNetworkConnected()) {
             Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
+            prgBar.visibility = GONE
             return
         }
         val options = FirebaseVisionCloudDetectorOptions.Builder()
@@ -210,7 +211,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
     private fun changeViewStates(bitmap: Bitmap) {
         img.setImageBitmap(bitmap)
-        progress_bar.visibility = GONE
+        prgBar.visibility = GONE
     }
 
     private fun translate(string: String?, bitmap: Bitmap?) {
@@ -256,7 +257,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         target_spinner.adapter = adapter
         src_spinner.setSelection(srcSpinnerSelection)
         target_spinner.setSelection(targetSpinnerSelection!!)
-        progress_bar.visibility = GONE
+        prgBar.visibility = GONE
         Log.i(TAG, "prpgBar should have disappeared")
         edt_src.setText(string)
         tv_target.text = translation.translatedText
@@ -276,10 +277,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        Log.i(TAG, "onItemSelected")
         val viewId = parent.id
         if (shouldCall) {
-            progress_bar.visibility = VISIBLE
+            prgBar.visibility = VISIBLE
             srcText = edt_src.text.toString()
             var translatedTxt: String? = null
             Thread {
@@ -301,7 +301,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     R.id.target_spinner -> {
                         targetLanguageCode = (parent.adapter.getItem(position) as Language).code
                         if (targetLanguageCode == srcLanguageCode) {
-                            Log.i(TAG, "target spinner=> targetLangCode=$targetLanguageCode, srcLangCode=$srcLanguageCode, edt text=${edt_src.text}")
                             translatedTxt = edt_src.text.toString()
                         } else {
                             translatedTxt = translateService.translate(srcText, Translate.TranslateOption
@@ -313,7 +312,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                 }
                 runOnUiThread {
                     tv_target.text = translatedTxt
-                    progress_bar.visibility = GONE
+                    prgBar.visibility = GONE
                 }
             }.start()
 
