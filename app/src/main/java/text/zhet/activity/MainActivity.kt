@@ -23,6 +23,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
@@ -167,6 +168,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                 }
             }
             ad?.show()
+            ad?.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    ad?.loadAd(AdRequest.Builder().build())
+                }
+            }
         } else {
             prgBar.visibility = GONE
         }

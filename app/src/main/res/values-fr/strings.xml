@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">Impossible de traiter la photo, réessayez s'il vous plaît</string>
+    <string name="app_needs_inet_conn">"Cette application nécessite une connexion Internet "</string>
+    <string name="translate_what">"Dites ce que vous voulez traduire "</string>
+</resources>
