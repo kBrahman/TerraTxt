@@ -28,3 +28,5 @@
 -dontwarn com.google.errorprone.annotations.**
 
 -keep class com.google.**{*;}
+
+-optimizations !class/unboxing/enum

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"Obrázok sa nepodarilo spracovať, skúste to prosím znova "</string>
+    <string name="app_needs_inet_conn">"Táto aplikácia potrebuje internetové pripojenie "</string>
+    <string name="translate_what">"Povedz, čo chcete preložiť "</string>
+</resources>

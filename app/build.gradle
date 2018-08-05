@@ -22,15 +22,15 @@ android {
         applicationId "text.zhet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 34
-        versionName "2.25"
+        versionCode 35
+        versionName "2.26"
         multiDexEnabled true
         buildConfigField "String", "KEY", localProperties["key"]
     }
     buildTypes {
         release {
             minifyEnabled = true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.zhet
             applicationVariants.all { variant ->
                 variant.outputs.all {
