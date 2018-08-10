@@ -14,7 +14,6 @@ import android.speech.RecognizerIntent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.util.SparseIntArray
 import android.view.*
 import android.view.View.GONE
@@ -120,7 +119,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         when (item.itemId) {
             R.id.action_shoot -> startCam()
             R.id.action_translate -> {
-                val string = edt_src.text.toString()
+                val string = edtSrc.text.toString()
                 if (srcText == null || string != srcText) {
                     srcText = string
                     prgBar.visibility = VISIBLE
@@ -163,7 +162,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                 }
                 ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH -> {
                     srcText = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
-                    edt_src.setText(srcText)
+                    edtSrc.setText(srcText)
                     Thread { translate(srcText, null) }.start()
                 }
             }
@@ -231,7 +230,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         supportedLanguages = translateService
                 .listSupportedLanguages(Translate.LanguageListOption.targetLanguage(Locale.getDefault().language))
         val languageNames = ArrayList<Language>()
-        val detection = translateService.detect(string)
+        val reduce = string?.split(" ")?.reduce { s1, s2 -> if (s1.length > s2.length) s1 else s2 }
+        val detection = translateService
+                .detect(Regex("[^A-Za-z0-9 ]").replace(reduce!!, ""))
         srcLanguageCode = detection.language
         var srcSpinnerSelection = 0
 
@@ -264,8 +265,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         src_spinner.setSelection(srcSpinnerSelection)
         target_spinner.setSelection(targetSpinnerSelection!!)
         prgBar.visibility = GONE
-        Log.i(TAG, "prpgBar should have disappeared")
-        edt_src.setText(string)
+        edtSrc.setText(string)
         tv_target.text = translation.translatedText
         if (bitmap != null) img.setImageBitmap(bitmap)
         src_spinner.onItemSelectedListener = this
@@ -286,7 +286,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         val viewId = parent.id
         if (shouldCall) {
             prgBar.visibility = VISIBLE
-            srcText = edt_src.text.toString()
+            srcText = edtSrc.text.toString()
             var translatedTxt: String? = null
             Thread {
                 when (viewId) {
@@ -299,7 +299,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                             }
                             targetLanguageCode = oldSrcLangCode
                             srcText = tv_target.text.toString()
-                            edt_src.setText(srcText)
+                            edtSrc.setText(srcText)
                         }
                         translatedTxt = translateService.translate(srcText, Translate.TranslateOption
                                 .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode)).translatedText
@@ -307,7 +307,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     R.id.target_spinner -> {
                         targetLanguageCode = (parent.adapter.getItem(position) as Language).code
                         if (targetLanguageCode == srcLanguageCode) {
-                            translatedTxt = edt_src.text.toString()
+                            translatedTxt = edtSrc.text.toString()
                         } else {
                             translatedTxt = translateService.translate(srcText, Translate.TranslateOption
                                     .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode)).translatedText

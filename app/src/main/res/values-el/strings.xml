@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"Δεν ήταν δυνατή η επεξεργασία της εικόνας, δοκιμάστε ξανά παρακαλώ "</string>
+    <string name="app_needs_inet_conn">"Αυτή η εφαρμογή χρειάζεται σύνδεση στο διαδίκτυο "</string>
+    <string name="translate_what">"Πείτε τι θέλετε να μεταφράσετε "</string>
+</resources>
