@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"ไม่สามารถประมวลผลภาพโปรดลองอีกครั้ง "</string>
+    <string name="app_needs_inet_conn">"แอปนี้ต้องการการเชื่อมต่ออินเทอร์เน็ต "</string>
+    <string name="translate_what">"พูดในสิ่งที่คุณต้องการแปล "</string>
+</resources>

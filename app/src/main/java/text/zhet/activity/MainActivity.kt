@@ -148,7 +148,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (intent.resolveActivity(packageManager) != null) {
             startActivityForResult(intent, ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE)
-
         }
     }
 
@@ -230,7 +229,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         supportedLanguages = translateService
                 .listSupportedLanguages(Translate.LanguageListOption.targetLanguage(Locale.getDefault().language))
         val languageNames = ArrayList<Language>()
-        val reduce = string?.split(" ")?.reduce { s1, s2 -> if (s1.length > s2.length) s1 else s2 }
+        val split = string?.split(" ")
+        val reduce = if (split?.size!! > 1) split.reduce { s1, s2 -> if (s1.length > s2.length) s1 else s2 } else split[0]
         val detection = translateService
                 .detect(Regex("[^A-Za-z0-9 ]").replace(reduce!!, ""))
         srcLanguageCode = detection.language
