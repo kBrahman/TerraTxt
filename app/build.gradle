@@ -22,8 +22,8 @@ android {
         applicationId "text.zhet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 37
-        versionName "2.28"
+        versionCode 38
+        versionName "2.29"
         multiDexEnabled true
         buildConfigField "String", "KEY", localProperties["key"]
     }

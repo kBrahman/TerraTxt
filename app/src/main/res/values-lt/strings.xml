@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"Nepavyko apdoroti paveikslėlio, bandykite dar kartą "</string>
+    <string name="app_needs_inet_conn">"Šiai programai reikia interneto ryšio "</string>
+    <string name="translate_what">"Sakyk, ką norite išversti "</string>
+</resources>
