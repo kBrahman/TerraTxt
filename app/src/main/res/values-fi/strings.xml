@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"Kuvan käsittelyä ei voitu käsitellä, yritä uudelleen "</string>
+    <string name="app_needs_inet_conn">"Tämä sovellus tarvitsee internetyhteyden "</string>
+    <string name="translate_what">"Sano, mitä haluat kääntää "</string>
+</resources>
