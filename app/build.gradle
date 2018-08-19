@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 
 def keystoreProperties = new Properties()
 keystoreProperties.load(rootProject.file("keystore.properties").newDataInputStream())
-
 def localProperties = new Properties()
 localProperties.load(rootProject.file('local.properties').newDataInputStream())
 
@@ -22,8 +21,8 @@ android {
         applicationId "text.zhet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 39
-        versionName "2.30"
+        versionCode 40
+        versionName "2.31"
         multiDexEnabled true
         buildConfigField "String", "KEY", localProperties["key"]
     }
@@ -53,10 +52,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-ml-vision:16.0.0'
+    implementation 'com.google.firebase:firebase-ml-vision:17.0.0'
     implementation 'com.google.cloud:google-cloud-translate:1.28.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
 }
-
 apply plugin: 'com.google.gms.google-services'
