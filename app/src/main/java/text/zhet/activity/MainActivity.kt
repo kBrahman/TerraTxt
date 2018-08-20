@@ -30,9 +30,9 @@ import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
 import com.google.cloud.translate.Translation
 import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.cloud.FirebaseVisionCloudDetectorOptions
-import com.google.firebase.ml.vision.cloud.text.FirebaseVisionCloudText
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.text.FirebaseVisionCloudTextRecognizerOptions
+import com.google.firebase.ml.vision.text.FirebaseVisionText
 import kotlinx.android.synthetic.main.activity_main.*
 import text.zhet.BuildConfig
 import text.zhet.R
@@ -188,14 +188,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             prgBar.visibility = GONE
             return
         }
-        val options = FirebaseVisionCloudDetectorOptions.Builder()
-                .setModelType(FirebaseVisionCloudDetectorOptions.LATEST_MODEL)
-                .setMaxResults(15)
-                .build()
+        val options = FirebaseVisionCloudTextRecognizerOptions.Builder().build()
 
         val image = FirebaseVisionImage.fromBitmap(bitmap)
-        FirebaseVision.getInstance().getVisionCloudTextDetector(options)
-                .detectInImage(image).addOnSuccessListener {
+        FirebaseVision.getInstance().getCloudTextRecognizer(options)
+                .processImage(image).addOnSuccessListener {
                     process(it, bitmap)
                 }
                 .addOnFailureListener {
@@ -203,7 +200,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                 }
     }
 
-    private fun process(cloudText: FirebaseVisionCloudText?, bitmap: Bitmap) {
+    private fun process(cloudText: FirebaseVisionText?, bitmap: Bitmap) {
         if (cloudText == null) {
             Toast.makeText(this, R.string.could_not_process_pic, Toast.LENGTH_LONG).show()
             changeViewStates(bitmap)
@@ -232,7 +229,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         val split = string?.split(" ")
         val reduce = if (split?.size!! > 1) split.reduce { s1, s2 -> if (s1.length > s2.length) s1 else s2 } else split[0]
         val detection = translateService
-                .detect(Regex("[^A-Za-z0-9 ]").replace(reduce!!, ""))
+                .detect(Regex("[^A-Za-z0-9 ]").replace(reduce, ""))
         srcLanguageCode = detection.language
         var srcSpinnerSelection = 0
 
