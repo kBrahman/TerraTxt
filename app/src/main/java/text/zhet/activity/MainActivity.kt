@@ -1,6 +1,5 @@
 package text.zhet.activity
 
-import android.Manifest.permission.CAMERA
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -11,11 +10,11 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.SparseIntArray
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.AdapterView
@@ -43,13 +42,10 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
-    private val ORIENTATIONS = SparseIntArray()
-
     companion object {
         const val PERMISSION_REQUEST = 1
         const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
-        const val ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH = 3
-        private val TAG = MainActivity::class.java.simpleName
+        const val ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH = 3
     }
 
     private lateinit var translateService: Translate
@@ -66,17 +62,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         MobileAds.initialize(this, getString(R.string.app_id))
-
-        ORIENTATIONS.append(Surface.ROTATION_0, 90)
-        ORIENTATIONS.append(Surface.ROTATION_90, 0)
-        ORIENTATIONS.append(Surface.ROTATION_180, 270)
-        ORIENTATIONS.append(Surface.ROTATION_270, 180)
-        val permissions = arrayOf(CAMERA)
-        if (!checkPermissions(permissions)) {
-            ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST)
-        } else {
-            startCam()
-        }
+        startCam()
         ad = InterstitialAd(this)
         ad?.adUnitId = getString(R.string.int_id)
         ad?.loadAd(AdRequest.Builder().build())
@@ -91,15 +77,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private fun isNetworkConnected(): Boolean {
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo != null
-    }
-
-    private fun checkPermissions(permissions: Array<String>): Boolean {
-        permissions.forEach {
-            if (ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED) {
-                return false
-            }
-        }
-        return true
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -138,7 +115,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.translate_what))
         try {
-            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH)
+            startActivityForResult(intent, ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH)
         } catch (a: ActivityNotFoundException) {
             a.printStackTrace()
         }
@@ -159,7 +136,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     val bitmap = data?.extras?.get("data") as Bitmap
                     rec(bitmap)
                 }
-                ACTIVITY_REQUEST_CODE_ECOGNIZE_SPEECH -> {
+                ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH -> {
                     srcText = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
                     edtSrc.setText(srcText)
                     Thread { translate(srcText, null) }.start()
