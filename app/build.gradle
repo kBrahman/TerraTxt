@@ -21,8 +21,8 @@ android {
         applicationId "text.zhet"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 41
-        versionName "2.32"
+        versionCode 42
+        versionName "2.33"
         multiDexEnabled true
         buildConfigField "String", "KEY", localProperties["key"]
     }
@@ -57,5 +57,4 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
 }
-
 apply plugin: 'com.google.gms.google-services'
