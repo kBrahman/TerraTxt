@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -20,11 +21,8 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
+import com.android.billingclient.api.*
+import com.android.billingclient.api.BillingClient.SkuType.SUBS
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
 import com.google.cloud.translate.Translation
@@ -40,12 +38,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, View.OnTouchListener, PurchasesUpdatedListener {
 
     companion object {
+        private val TAG: String = MainActivity::class.java.simpleName
         const val PERMISSION_REQUEST = 1
         const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
         const val ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH = 3
+        const val SUBSCRIPTION = "textpert_sub"
     }
 
     private lateinit var translateService: Translate
@@ -55,29 +55,26 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private var shouldCall = false
     private lateinit var supportedLanguages: MutableList<com.google.cloud.translate.Language>
     private var targetSpinnerSelection: Int? = null
+    private lateinit var client: BillingClient
+    private lateinit var removeAdsMenuItem: MenuItem
 
-    private var ad: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!isNetworkConnected()) {
+            setContentView(R.layout.no_internet)
+        } else {
+            init(null)
+        }
+    }
+
+    fun init(v: View?) {
+        if (!isNetworkConnected()) return
         setContentView(R.layout.activity_main)
-        MobileAds.initialize(this, getString(R.string.app_id))
         startCam()
-        ad = InterstitialAd(this)
-        ad?.adUnitId = getString(R.string.int_id)
-        ad?.loadAd(AdRequest.Builder().build())
-        adView.loadAd(AdRequest.Builder().build())
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        ad?.show()
-    }
-
-    private fun isNetworkConnected(): Boolean {
-        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo != null
-    }
+    private fun isNetworkConnected() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo != null
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
@@ -97,7 +94,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             R.id.action_shoot -> startCam()
             R.id.action_translate -> {
                 val string = edtSrc.text.toString()
-                if (srcText == null || string != srcText) {
+                if (string.isNotBlank() && string != srcText) {
                     srcText = string
                     prgBar.visibility = VISIBLE
                     Thread { translate(string, null) }.start()
@@ -106,7 +103,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             R.id.action_mic -> speechToText()
 
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     private fun speechToText() {
@@ -142,29 +139,49 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     Thread { translate(srcText, null) }.start()
                 }
             }
-            ad?.show()
-            ad?.adListener = object : AdListener() {
-                override fun onAdClosed() {
-                    ad?.loadAd(AdRequest.Builder().build())
-                }
-            }
+
         } else {
             prgBar.visibility = GONE
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    private fun billing() {
+        client = BillingClient.newBuilder(this).setListener(this).build()
+        client.startConnection(object : BillingClientStateListener {
+            override fun onBillingServiceDisconnected() {}
+
+            override fun onBillingSetupFinished(responseCode: Int) {
+                if (responseCode == BillingClient.BillingResponse.OK) {
+                    val params = SkuDetailsParams.newBuilder().setType(SUBS).setSkusList(listOf(SUBSCRIPTION)).build()
+                    val purchases = client.queryPurchases(BillingClient.SkuType.SUBS)
+                    val purchasesList = purchases.purchasesList
+                    Log.i(TAG, purchasesList.toString())
+                    if (purchasesList.isEmpty()) {
+                        removeAdsMenuItem.isVisible = true
+                    }
+                }
+            }
+
+        })
+    }
+
+    override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
+        this.removeAdsMenuItem = menu.findItem(R.id.action_remove_ads)
+//        billing()
         return true
     }
 
+    fun removeAds(item: MenuItem) {
+
+    }
+
     private fun rec(bitmap: Bitmap) {
-        if (!isNetworkConnected()) {
-            Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
-            prgBar.visibility = GONE
-            return
-        }
         val options = FirebaseVisionCloudTextRecognizerOptions.Builder().build()
 
         val image = FirebaseVisionImage.fromBitmap(bitmap)
@@ -193,10 +210,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     private fun translate(string: String?, bitmap: Bitmap?) {
-        if (!isNetworkConnected()) {
-            Toast.makeText(this, R.string.app_needs_inet_conn, LENGTH_LONG).show()
-            return
-        }
         val instance = TranslateOptions.newBuilder().setApiKey(BuildConfig.KEY).build()
 
         translateService = instance.service
@@ -208,6 +221,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         val detection = translateService
                 .detect(Regex("[^A-Za-z0-9 ]").replace(reduce, ""))
         srcLanguageCode = detection.language
+        Log.i(TAG, "srcLanguageCode=>$srcLanguageCode")
         var srcSpinnerSelection = 0
 
 
@@ -240,7 +254,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         target_spinner.setSelection(targetSpinnerSelection!!)
         prgBar.visibility = GONE
         edtSrc.setText(string)
-        tv_target.text = translation.translatedText
+        tvTarget.text = translation.translatedText
         if (bitmap != null) img.setImageBitmap(bitmap)
         src_spinner.onItemSelectedListener = this
         target_spinner.onItemSelectedListener = this
@@ -272,7 +286,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                                 target_spinner.setSelection(getIndexByLanguage(oldSrcLangCode))
                             }
                             targetLanguageCode = oldSrcLangCode
-                            srcText = tv_target.text.toString()
+                            srcText = tvTarget.text.toString()
                             edtSrc.setText(srcText)
                         }
                         translatedTxt = translateService.translate(srcText, Translate.TranslateOption
@@ -291,7 +305,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
                 }
                 runOnUiThread {
-                    tv_target.text = translatedTxt
+                    tvTarget.text = translatedTxt
                     prgBar.visibility = GONE
                 }
             }.start()

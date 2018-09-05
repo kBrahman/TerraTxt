@@ -3,6 +3,8 @@
           package="text.zhet">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -21,7 +23,5 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        
     </application>
 </manifest>

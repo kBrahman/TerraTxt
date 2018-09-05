@@ -16,4 +16,11 @@
         android:icon="@drawable/ic_translate_black_24dp"
         android:title="@string/action_translate"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_remove_ads"
+        android:title="@string/remove_ads"
+        android:visible="false"
+        app:showAsAction="never"
+        android:onClick="removeAds"/>
 </menu>

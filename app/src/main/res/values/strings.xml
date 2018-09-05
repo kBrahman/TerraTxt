@@ -2,4 +2,7 @@
     <string name="could_not_process_pic">Could not process the picture, try again please</string>
     <string name="app_needs_inet_conn">This app needs internet connection</string>
     <string name="translate_what">Say what you want to translate</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="no_net_conn">No internet connection</string>
+    <string name="refresh">Refresh</string>
 </resources>
