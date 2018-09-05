@@ -21,8 +21,8 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import com.android.billingclient.api.*
-import com.android.billingclient.api.BillingClient.SkuType.SUBS
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
 import com.google.cloud.translate.Translation
@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
     companion object {
         private val TAG: String = MainActivity::class.java.simpleName
-        const val PERMISSION_REQUEST = 1
-        const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
-        const val ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH = 3
-        const val SUBSCRIPTION = "textpert_sub"
+        private const val PERMISSION_REQUEST = 1
+        private const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
+        private const val ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH = 3
+        private const val SKU_ID = "text.zhet.remove.ads"
     }
 
     private lateinit var translateService: Translate
@@ -153,11 +153,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
             override fun onBillingSetupFinished(responseCode: Int) {
                 if (responseCode == BillingClient.BillingResponse.OK) {
-                    val params = SkuDetailsParams.newBuilder().setType(SUBS).setSkusList(listOf(SUBSCRIPTION)).build()
                     val purchases = client.queryPurchases(BillingClient.SkuType.SUBS)
                     val purchasesList = purchases.purchasesList
                     Log.i(TAG, purchasesList.toString())
-                    if (purchasesList.isEmpty()) {
+                    if (purchasesList.isEmpty() && client.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == 0) {
                         removeAdsMenuItem.isVisible = true
                     }
                 }
@@ -167,18 +166,21 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.i(TAG, "onPurchasesUpdated")
+        if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
+            Toast.makeText(this, R.string.thank_you, LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         this.removeAdsMenuItem = menu.findItem(R.id.action_remove_ads)
-//        billing()
+        billing()
         return true
     }
 
     fun removeAds(item: MenuItem) {
-
+        client.launchBillingFlow(this, BillingFlowParams.newBuilder().setType(BillingClient.SkuType.SUBS).setSku(SKU_ID).build())
     }
 
     private fun rec(bitmap: Bitmap) {

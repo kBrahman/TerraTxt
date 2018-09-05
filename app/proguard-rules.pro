@@ -30,3 +30,4 @@
 -keep class com.google.**{*;}
 
 -optimizations !class/unboxing/enum
+-keep class com.android.vending.billing.**
