@@ -23,6 +23,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.android.billingclient.api.*
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
 import com.google.cloud.translate.Translation
@@ -58,9 +62,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private lateinit var client: BillingClient
     private lateinit var removeAdsMenuItem: MenuItem
 
+    private var ad: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this, getString(R.string.app_id))
         if (!isNetworkConnected()) {
             setContentView(R.layout.no_internet)
         } else {
@@ -139,7 +145,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     Thread { translate(srcText, null) }.start()
                 }
             }
-
+            ad?.show()
+            ad?.adListener = object : AdListener() {
+                override fun onAdClosed() {
+                    ad?.loadAd(AdRequest.Builder().build())
+                }
+            }
         } else {
             prgBar.visibility = GONE
         }
@@ -158,6 +169,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     Log.i(TAG, purchasesList.toString())
                     if (purchasesList.isEmpty() && client.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == 0) {
                         removeAdsMenuItem.isVisible = true
+                        initAds()
                     }
                 }
             }
@@ -165,10 +177,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         })
     }
 
+    private fun initAds() {
+        adView.loadAd(AdRequest.Builder().build())
+        ad = InterstitialAd(this)
+        ad?.adUnitId = getString(R.string.int_id)
+        ad?.loadAd(AdRequest.Builder().build())
+    }
+
     override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
         Log.i(TAG, "onPurchasesUpdated")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             Toast.makeText(this, R.string.thank_you, LENGTH_SHORT).show()
+            adView.visibility = GONE
+            ad = null
         }
     }
 
