@@ -314,10 +314,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     }
                     R.id.target_spinner -> {
                         targetLanguageCode = (parent.adapter.getItem(position) as Language).code
-                        if (targetLanguageCode == srcLanguageCode) {
-                            translatedTxt = edtSrc.text.toString()
+                        translatedTxt = if (targetLanguageCode == srcLanguageCode) {
+                            edtSrc.text.toString()
                         } else {
-                            translatedTxt = translateService.translate(srcText, Translate.TranslateOption
+                            translateService.translate(srcText, Translate.TranslateOption
                                     .targetLanguage(targetLanguageCode), Translate.TranslateOption.sourceLanguage(srcLanguageCode)).translatedText
                         }
                         targetSpinnerSelection = position
