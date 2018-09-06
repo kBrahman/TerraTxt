@@ -239,12 +239,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         supportedLanguages = translateService
                 .listSupportedLanguages(Translate.LanguageListOption.targetLanguage(Locale.getDefault().language))
         val languageNames = ArrayList<Language>()
-        val split = string?.split(" ")
-        val reduce = if (split?.size!! > 1) split.reduce { s1, s2 -> if (s1.length > s2.length) s1 else s2 } else split[0]
         val detection = translateService
-                .detect(Regex("[^A-Za-z0-9 ]").replace(reduce, ""))
+                .detect(string)
         srcLanguageCode = detection.language
-        Log.i(TAG, "srcLanguageCode=>$srcLanguageCode")
         var srcSpinnerSelection = 0
 
 
