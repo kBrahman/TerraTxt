@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private var shouldCall = false
     private lateinit var supportedLanguages: MutableList<com.google.cloud.translate.Language>
     private var targetSpinnerSelection: Int? = null
-    private lateinit var client: BillingClient
-    private lateinit var removeAdsMenuItem: MenuItem
+    private var client: BillingClient? = null
+    private var removeAdsMenuItem: MenuItem? = null
 
     private var ad: InterstitialAd? = null
 
@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         if (!isNetworkConnected()) return
         setContentView(R.layout.activity_main)
         startCam()
+        billing()
     }
 
     private fun isNetworkConnected() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo != null
@@ -158,17 +159,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     private fun billing() {
-        client = BillingClient.newBuilder(this).setListener(this).build()
-        client.startConnection(object : BillingClientStateListener {
+        if (client == null) client = BillingClient.newBuilder(this).setListener(this).build()
+        client?.startConnection(object : BillingClientStateListener {
             override fun onBillingServiceDisconnected() {}
 
             override fun onBillingSetupFinished(responseCode: Int) {
                 if (responseCode == BillingClient.BillingResponse.OK) {
-                    val purchases = client.queryPurchases(BillingClient.SkuType.SUBS)
-                    val purchasesList = purchases.purchasesList
+                    val purchases = client?.queryPurchases(BillingClient.SkuType.SUBS)
+                    val purchasesList = purchases?.purchasesList
                     Log.i(TAG, purchasesList.toString())
-                    if (purchasesList.isEmpty() && client.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == 0) {
-                        removeAdsMenuItem.isVisible = true
+                    if (purchasesList?.isEmpty()!! && client?.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == 0) {
+                        removeAdsMenuItem?.isVisible = true
                         initAds()
                     }
                 }
@@ -178,7 +179,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     private fun initAds() {
-        adView.loadAd(AdRequest.Builder().build())
+        adView?.loadAd(AdRequest.Builder().build())
         ad = InterstitialAd(this)
         ad?.adUnitId = getString(R.string.int_id)
         ad?.loadAd(AdRequest.Builder().build())
@@ -190,6 +191,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             Toast.makeText(this, R.string.thank_you, LENGTH_SHORT).show()
             adView.visibility = GONE
             ad = null
+            removeAdsMenuItem?.isVisible = false
         }
     }
 
@@ -201,7 +203,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     fun removeAds(item: MenuItem) {
-        client.launchBillingFlow(this, BillingFlowParams.newBuilder().setType(BillingClient.SkuType.SUBS).setSku(SKU_ID).build())
+        client?.launchBillingFlow(this, BillingFlowParams.newBuilder().setType(BillingClient.SkuType.SUBS).setSku(SKU_ID).build())
     }
 
     private fun rec(bitmap: Bitmap) {

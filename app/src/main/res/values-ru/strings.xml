@@ -6,4 +6,8 @@
     <string name="app_needs_inet_conn">Приложению необходим доступ в интернет</string>
 
     <string name="translate_what">Скажите что перевести</string>
+    <string name="remove_ads">Убрать рекламу</string>
+    <string name="no_net_conn">Нет интернета</string>
+    <string name="refresh">Обновить</string>
+    <string name="thank_you">Спасибо!</string>
 </resources>
