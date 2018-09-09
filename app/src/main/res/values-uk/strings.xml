@@ -6,4 +6,8 @@
     <string name="app_needs_inet_conn">"Для цього додатка потрібне підключення до Інтернету "</string>
 
     <string name="translate_what">" Скажіть, що ви хочете перекласти"</string>
+    <string name="remove_ads">"Прибрати рекламу "</string>
+    <string name="no_net_conn">"Немає інтернету "</string>
+    <string name="refresh">Оновити</string>
+    <string name="thank_you">"Дякуємо! "</string>
 </resources>
