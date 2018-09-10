@@ -158,6 +158,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        ad?.show()
+    }
+
     private fun billing() {
         if (client == null) client = BillingClient.newBuilder(this).setListener(this).build()
         client?.startConnection(object : BillingClientStateListener {
