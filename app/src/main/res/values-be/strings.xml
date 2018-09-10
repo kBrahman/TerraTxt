@@ -6,4 +6,8 @@
     <string name="app_needs_inet_conn">"Гэта дадатак патрабуе падлучэння да Інтэрнэту "</string>
 
     <string name="translate_what">"Скажыце, што вы хочаце перавесці "</string>
+    <string name="remove_ads">"Прыбраць рэкламу "</string>
+    <string name="no_net_conn">"Няма падлучэння да Інтэрнэту "</string>
+    <string name="refresh">Абнавіць</string>
+    <string name="thank_you">"Дзякуй! "</string>
 </resources>
