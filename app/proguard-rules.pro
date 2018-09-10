@@ -31,3 +31,4 @@
 
 -optimizations !class/unboxing/enum
 -keep class com.android.vending.billing.**
+-keepattributes LineNumberTable
