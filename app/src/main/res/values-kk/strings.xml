@@ -6,4 +6,8 @@
     <string name="app_needs_inet_conn">Мына қосымшаға интернет қажет</string>
 
     <string name="translate_what">Аударатын сөзді айтыңыз</string>
+    <string name="remove_ads">Жарнаманы алып тастау</string>
+    <string name="no_net_conn">Интренет жоқ</string>
+    <string name="refresh">Жаңарту</string>
+    <string name="thank_you">Рахмет</string>
 </resources>
