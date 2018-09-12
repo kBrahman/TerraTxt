@@ -6,4 +6,8 @@
     <string name="app_needs_inet_conn">"Ta aplikacja wymaga połączenia z Internetem "</string>
 
     <string name="translate_what">"Powiedz, co chcesz przetłumaczyć "</string>
+    <string name="remove_ads">"Usuń reklamy "</string>
+    <string name="no_net_conn">"Brak połączenia z internetem "</string>
+    <string name="refresh">Odświeżać</string>
+    <string name="thank_you">"Dziękuję Ci! "</string>
 </resources>
