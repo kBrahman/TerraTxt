@@ -21,6 +21,7 @@ import android.view.View.VISIBLE
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import com.android.billingclient.api.*
 import com.google.android.gms.ads.AdListener
@@ -28,6 +29,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
 import com.google.cloud.translate.Translate
+import com.google.cloud.translate.TranslateException
 import com.google.cloud.translate.TranslateOptions
 import com.google.cloud.translate.Translation
 import com.google.firebase.ml.vision.FirebaseVision
@@ -230,7 +232,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             changeViewStates(bitmap)
         } else {
             srcText = cloudText.text
-            Thread { translate(srcText, bitmap) }.start()
+            Thread {
+                try {
+                    translate(srcText, bitmap)
+                } catch (e: TranslateException) {
+                    Toast.makeText(this, R.string.translation_problem, LENGTH_LONG).show()
+                }
+
+            }.start()
         }
     }
 

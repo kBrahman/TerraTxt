@@ -3,4 +3,8 @@
     <string name="could_not_process_pic">"Kunne ikke behandle billedet, prøv igen venligst "</string>
     <string name="app_needs_inet_conn">"Denne app har internetforbindelse "</string>
     <string name="translate_what">"Sig hvad du vil oversætte "</string>
+    <string name="remove_ads">"Fjern annoncer "</string>
+    <string name="no_net_conn">"Ingen internetforbindelse "</string>
+    <string name="refresh">Opdater</string>
+    <string name="thank_you">"Tak skal du have! "</string>
 </resources>

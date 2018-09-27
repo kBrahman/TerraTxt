@@ -6,4 +6,5 @@
     <string name="no_net_conn">No internet connection</string>
     <string name="refresh">Refresh</string>
     <string name="thank_you">Thank you!</string>
+    <string name="translation_problem">There was a problem with translation service, try again please</string>
 </resources>
