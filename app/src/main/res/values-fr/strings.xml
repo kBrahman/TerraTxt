@@ -3,4 +3,9 @@
     <string name="could_not_process_pic">Impossible de traiter la photo, réessayez s\'il vous plaît</string>
     <string name="app_needs_inet_conn">"Cette application nécessite une connexion Internet "</string>
     <string name="translate_what">"Dites ce que vous voulez traduire "</string>
+    <string name="remove_ads">"Supprimez la pub "</string>
+    <string name="no_net_conn">"Pas de connexion Internet "</string>
+    <string name="refresh">Rafraîchir</string>
+    <string name="thank_you">"Je vous remercie! "</string>
+    <string name="translation_problem">"Il y avait un problème avec le service de traduction, essayez à nouveau s'il vous plaît "</string>
 </resources>
