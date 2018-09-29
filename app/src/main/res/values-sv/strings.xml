@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">Kunde inte behandla bilden, försök igen tack</string>
+    <string name="app_needs_inet_conn">Den här appen behöver internetuppkoppling</string>
+    <string name="translate_what">Säg vad du vill översätta</string>
+    <string name="remove_ads">Ta bort annonser</string>
+    <string name="no_net_conn">Ingen internetanslutning</string>
+    <string name="refresh">Uppdatera</string>
+    <string name="thank_you">Tack!</string>
+    <string name="translation_problem">Det uppstod ett problem med översättningstjänsten, försök igen tack</string>
+</resources>
