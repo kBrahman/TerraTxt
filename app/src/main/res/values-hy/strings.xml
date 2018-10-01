@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="could_not_process_pic">"Չհաջողվեց մշակել նկարը, կրկին փորձեք "</string>
+    <string name="app_needs_inet_conn">"Այս հավելվածին անհրաժեշտ է ինտերնետ կապ "</string>
+    <string name="translate_what">"Ասեք, թե ինչ եք ուզում թարգմանել "</string>
+    <string name="remove_ads">"Հեռացնել գովազդը "</string>
+    <string name="no_net_conn">"Ինտերնետ կապ չկա "</string>
+    <string name="refresh">"Թարմացրեք "</string>
+    <string name="thank_you">"Շնորհակալություն! "</string>
+    <string name="translation_problem">"Թարգմանության ծառայության հետ կապված խնդիր առաջացավ, կրկին փորձեք "</string>
+</resources>
