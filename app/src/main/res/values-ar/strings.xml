@@ -5,4 +5,9 @@
     <string name="app_needs_inet_conn">"هذا التطبيق يحتاج إلى اتصال بالإنترنت "</string>
 
     <string name="translate_what">"قل ما تريد ترجمته "</string>
+    <string name="remove_ads">"ازالة الاعلانات "</string>
+    <string name="no_net_conn">"لا يوجد اتصال بالإنترنت "</string>
+    <string name="refresh">"تحديث "</string>
+    <string name="thank_you">"شكرا لكم! "</string>
+    <string name="translation_problem">"كانت هناك مشكلة في خدمة الترجمة ، حاول مرة أخرى من فضلك "</string>
 </resources>
