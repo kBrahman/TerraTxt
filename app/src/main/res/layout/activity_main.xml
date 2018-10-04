@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:onClick="removeAds"
         android:text="@string/remove_ads"
         android:textColor="@android:color/holo_red_dark"
-        android:onClick="removeAds"/>
+        android:visibility="gone"/>
 
     <Spinner
         android:id="@+id/src_spinner"
