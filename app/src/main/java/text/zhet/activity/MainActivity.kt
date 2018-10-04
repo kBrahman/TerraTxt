@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         private const val SKU_ID = "text.zhet.remove.ads"
     }
 
+
     private lateinit var translateService: Translate
     private var srcText: String? = null
     private var targetLanguageCode: String = Locale.getDefault().language
@@ -176,7 +177,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     val purchasesList = purchases?.purchasesList
                     Log.i(TAG, purchasesList.toString())
                     if (purchasesList?.isEmpty()!! && client?.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == 0) {
-                        removeAdsMenuItem?.isVisible = true
+                        adText.visibility = VISIBLE
                         initAds()
                     }
                 }
@@ -198,18 +199,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             Toast.makeText(this, R.string.thank_you, LENGTH_SHORT).show()
             adView.visibility = GONE
             ad = null
-            removeAdsMenuItem?.isVisible = false
+            adText.visibility = GONE
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        this.removeAdsMenuItem = menu.findItem(R.id.action_remove_ads)
         billing()
         return true
     }
 
-    fun removeAds(item: MenuItem) {
+    fun removeAds(v: View?) {
         client?.launchBillingFlow(this, BillingFlowParams.newBuilder().setType(BillingClient.SkuType.SUBS).setSku(SKU_ID).build())
     }
 

@@ -7,13 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
+    <TextView
+        android:id="@+id/adText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/remove_ads"
+        android:textColor="@android:color/holo_red_dark"
+        android:onClick="removeAds"/>
+
     <Spinner
         android:id="@+id/src_spinner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="4dp"
         app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adText"/>
 
     <Spinner
         android:id="@+id/target_spinner"
@@ -21,7 +31,8 @@
         android:layout_height="wrap_content"
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline"/>
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/adText"/>
 
     <LinearLayout
         android:id="@+id/l_layout"

@@ -6,4 +6,9 @@
     <string name="app_needs_inet_conn">"이 앱은 인터넷에 연결되어 있어야합니다. "</string>
 
     <string name="translate_what">"번역 할 말을 말해보세요. "</string>
+    <string name="remove_ads">"광고를 제거하다 "</string>
+    <string name="no_net_conn">"인터넷에 연결되지 않음 "</string>
+    <string name="refresh">"새롭게 하다 "</string>
+    <string name="thank_you">"고맙습니다! "</string>
+    <string name="translation_problem">"번역 서비스에 문제가 있습니다. 다시 시도하십시오. "</string>
 </resources>
