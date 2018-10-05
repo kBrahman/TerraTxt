@@ -6,4 +6,9 @@
     <string name="app_needs_inet_conn">"Diese App benötigt eine Internetverbindung "</string>
 
     <string name="translate_what">"Sagen Sie, was Sie übersetzen möchten "</string>
+    <string name="remove_ads">"Anzeigen entfernen "</string>
+    <string name="no_net_conn">"Keine Internetverbindung "</string>
+    <string name="refresh">"Aktualisierung "</string>
+    <string name="thank_you">"Vielen Dank! "</string>
+    <string name="translation_problem">"Es gab ein Problem mit dem Übersetzungsdienst. Bitte versuchen Sie es erneut "</string>
 </resources>
