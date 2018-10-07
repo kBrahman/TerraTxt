@@ -24,6 +24,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import com.android.billingclient.api.*
+import com.android.billingclient.api.BillingClient.BillingResponse.OK
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
@@ -176,8 +177,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
                     val purchases = client?.queryPurchases(BillingClient.SkuType.SUBS)
                     val purchasesList = purchases?.purchasesList
                     Log.i(TAG, purchasesList.toString())
-                    if (purchasesList?.isEmpty()!! && client?.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == 0) {
-                        adText.visibility = VISIBLE
+                    if (purchasesList?.isEmpty()!! && client?.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == OK) {
+                        adText?.visibility = VISIBLE
                         initAds()
                     }
                 }
