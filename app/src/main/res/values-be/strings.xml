@@ -10,4 +10,5 @@
     <string name="no_net_conn">"Няма падлучэння да Інтэрнэту "</string>
     <string name="refresh">Абнавіць</string>
     <string name="thank_you">"Дзякуй! "</string>
+    <string name="translation_problem">"Была праблема са службай перакладу, паспрабуйце яшчэ раз калі ласка "</string>
 </resources>

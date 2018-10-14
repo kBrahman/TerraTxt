@@ -28,7 +28,6 @@ import com.android.billingclient.api.BillingClient.BillingResponse.OK
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
-import com.google.android.gms.ads.MobileAds
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateException
 import com.google.cloud.translate.TranslateOptions
@@ -64,13 +63,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private lateinit var supportedLanguages: MutableList<com.google.cloud.translate.Language>
     private var targetSpinnerSelection: Int? = null
     private var client: BillingClient? = null
-    private var removeAdsMenuItem: MenuItem? = null
 
     private var ad: InterstitialAd? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MobileAds.initialize(this, getString(R.string.app_id))
         if (!isNetworkConnected()) {
             setContentView(R.layout.no_internet)
         } else {
@@ -81,6 +78,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     fun init(v: View?) {
         if (!isNetworkConnected()) return
         setContentView(R.layout.activity_main)
+
         startCam()
         billing()
     }

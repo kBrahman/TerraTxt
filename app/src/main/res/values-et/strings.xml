@@ -6,4 +6,9 @@
     <string name="app_needs_inet_conn">"Sellel rakendusel on vaja Interneti-ühendust "</string>
 
     <string name="translate_what">"Ütle, mida soovite tõlkida "</string>
+    <string name="remove_ads">"Eemalda reklaamid "</string>
+    <string name="no_net_conn">"Interneti-ühendus puudub "</string>
+    <string name="refresh">Värskenda</string>
+    <string name="thank_you">"Aitäh! "</string>
+    <string name="translation_problem">"Tõlketeenuse puhul tekkis probleem, proovige palun uuesti "</string>
 </resources>
