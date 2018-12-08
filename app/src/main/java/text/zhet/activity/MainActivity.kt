@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
     companion object {
         private val TAG: String = MainActivity::class.java.simpleName
-        private const val PERMISSION_REQUEST = 1
         private const val ACTIVITY_REQUEST_CODE_IMAGE_CAPTURE = 2
         private const val ACTIVITY_REQUEST_CODE_RECOGNIZE_SPEECH = 3
         private const val SKU_ID = "text.zhet.remove.ads"
@@ -78,25 +76,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     fun init(v: View?) {
         if (!isNetworkConnected()) return
         setContentView(R.layout.activity_main)
-
         startCam()
         billing()
     }
 
-    private fun isNetworkConnected() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo != null
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            PERMISSION_REQUEST -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    startCam()
-                } else {
-                    finish()
-                }
-                return
-            }
-        }
-    }
+    private fun isNetworkConnected() = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo != null
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -193,7 +178,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     }
 
     override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
-        Log.i(TAG, "onPurchasesUpdated")
         if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
             Toast.makeText(this, R.string.thank_you, LENGTH_SHORT).show()
             adView.visibility = GONE
@@ -214,13 +198,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
 
     private fun rec(bitmap: Bitmap) {
         val options = FirebaseVisionCloudTextRecognizerOptions.Builder().build()
-
         val image = FirebaseVisionImage.fromBitmap(bitmap)
         FirebaseVision.getInstance().getCloudTextRecognizer(options)
                 .processImage(image).addOnSuccessListener {
                     process(it, bitmap)
                 }
                 .addOnFailureListener {
+                    Toast.makeText(this, R.string.could_not_process_pic, LENGTH_LONG).show()
+                    prgBar.visibility = GONE
                     it.printStackTrace()
                 }
     }
