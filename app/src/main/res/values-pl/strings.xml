@@ -10,4 +10,5 @@
     <string name="no_net_conn">"Brak połączenia z internetem "</string>
     <string name="refresh">Odświeżać</string>
     <string name="thank_you">"Dziękuję Ci! "</string>
+    <string name="translation_problem">"Wystąpił problem z usługą tłumaczenia, spróbuj ponownie "</string>
 </resources>
