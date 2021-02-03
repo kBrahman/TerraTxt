@@ -9,8 +9,6 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.speech.RecognizerIntent
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
@@ -21,9 +19,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
-import android.widget.Toast.LENGTH_SHORT
-import com.android.billingclient.api.*
-import com.android.billingclient.api.BillingClient.BillingResponse.OK
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
@@ -43,7 +39,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, View.OnTouchListener, PurchasesUpdatedListener {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, View.OnTouchListener {
 
     companion object {
         private val TAG: String = MainActivity::class.java.simpleName
@@ -52,7 +48,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         private const val SKU_ID = "text.zhet.remove.ads"
     }
 
-
     private lateinit var translateService: Translate
     private var srcText: String? = null
     private var targetLanguageCode: String = Locale.getDefault().language
@@ -60,7 +55,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
     private var shouldCall = false
     private lateinit var supportedLanguages: MutableList<com.google.cloud.translate.Language>
     private var targetSpinnerSelection: Int? = null
-    private var client: BillingClient? = null
 
     private var ad: InterstitialAd? = null
 
@@ -77,7 +71,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         if (!isNetworkConnected()) return
         setContentView(R.layout.activity_main)
         startCam()
-        billing()
     }
 
 
@@ -150,26 +143,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         ad?.show()
     }
 
-    private fun billing() {
-        if (client == null) client = BillingClient.newBuilder(this).setListener(this).build()
-        client?.startConnection(object : BillingClientStateListener {
-            override fun onBillingServiceDisconnected() {}
-
-            override fun onBillingSetupFinished(responseCode: Int) {
-                if (responseCode == BillingClient.BillingResponse.OK) {
-                    val purchases = client?.queryPurchases(BillingClient.SkuType.SUBS)
-                    val purchasesList = purchases?.purchasesList
-                    Log.i(TAG, purchasesList.toString())
-                    if (purchasesList?.isEmpty()!! && client?.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS) == OK) {
-                        adText?.visibility = VISIBLE
-                        initAds()
-                    }
-                }
-            }
-
-        })
-    }
-
     private fun initAds() {
         adView?.loadAd(AdRequest.Builder().build())
         ad = InterstitialAd(this)
@@ -177,23 +150,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
         ad?.loadAd(AdRequest.Builder().build())
     }
 
-    override fun onPurchasesUpdated(responseCode: Int, purchases: MutableList<Purchase>?) {
-        if (responseCode == BillingClient.BillingResponse.OK && purchases != null) {
-            Toast.makeText(this, R.string.thank_you, LENGTH_SHORT).show()
-            adView.visibility = GONE
-            ad = null
-            adText.visibility = GONE
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
-        billing()
         return true
-    }
-
-    fun removeAds(v: View?) {
-        client?.launchBillingFlow(this, BillingFlowParams.newBuilder().setType(BillingClient.SkuType.SUBS).setSku(SKU_ID).build())
     }
 
     private fun rec(bitmap: Bitmap) {
@@ -216,11 +175,12 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener, Vi
             changeViewStates(bitmap)
         } else {
             srcText = cloudText.text
+
             Thread {
                 try {
                     translate(srcText, bitmap)
                 } catch (e: TranslateException) {
-                    Toast.makeText(this, R.string.translation_problem, LENGTH_LONG).show()
+                    runOnUiThread { Toast.makeText(this, R.string.translation_problem, LENGTH_LONG).show() }
                 }
 
             }.start()
