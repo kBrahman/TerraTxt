@@ -57,7 +57,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.firebase:firebase-core:18.0.2'
     implementation 'com.google.firebase:firebase-ml-vision:19.0.3'
-    implementation 'com.google.cloud:google-cloud-translate:1.95.7'
+    implementation 'com.google.cloud:google-cloud-translate:1.95.9'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.google.android.gms:play-services-ads:19.7.0'
 }

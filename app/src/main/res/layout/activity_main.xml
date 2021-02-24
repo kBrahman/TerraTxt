@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
-
-    <TextView
-        android:id="@+id/adText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:onClick="removeAds"
-        android:text="@string/remove_ads"
-        android:textColor="@android:color/holo_red_dark"
-        android:visibility="gone"/>
 
     <Spinner
         android:id="@+id/src_spinner"
@@ -24,7 +13,7 @@
         android:padding="4dp"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/adText"/>
+        app:layout_constraintTop_toBottomOf="@+id/adText" />
 
     <Spinner
         android:id="@+id/target_spinner"
@@ -33,7 +22,7 @@
         android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/adText"/>
+        app:layout_constraintTop_toBottomOf="@+id/adText" />
 
     <LinearLayout
         android:id="@+id/l_layout"
@@ -48,7 +37,7 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:padding="4dp"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
 
         <TextView
@@ -58,7 +47,7 @@
             android:layout_weight="1"
             android:padding="4dp"
             android:textIsSelectable="true"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -68,7 +57,7 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical"
         android:visibility="visible"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.5" />
 
     <ImageView
         android:id="@+id/img"
@@ -77,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/l_layout"/>
+        app:layout_constraintTop_toBottomOf="@+id/l_layout" />
 
     <ProgressBar
         android:id="@+id/prgBar"
@@ -86,14 +75,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.gms.ads.AdView
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_id"
-        ads:layout_constraintBottom_toBottomOf="parent"/>
+        ads:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
